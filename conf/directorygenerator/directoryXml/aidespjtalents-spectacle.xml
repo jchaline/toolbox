@@ -1,0 +1,835 @@
+<?xml version="1.0"?>
+<formDefinition name="aidespjtalents-spectacle"
+	className="fr.paris.lutece.plugins.formengine.modules.aidespjtalents.web.AidesPjTalentsForm">
+	<title>Paris Jeunes Aides - Spectacle vivant</title>
+	<subForms>
+		<subFormDefinition name="introduction"
+			className="fr.paris.lutece.plugins.formengine.modules.aidespjtalents.web.IntroductionSubForm">
+			<title>Introduction</title>
+			<formElements>
+				<fields>
+					<field type="text" name="usedraft">
+						<label>usedraft</label>
+						<value />
+					</field>
+				</fields>
+				<buttons>
+					<button name="Annuler" type="button" />
+					<button name="Demarrer la saisie" type="submit" />
+				</buttons>
+			</formElements>
+		</subFormDefinition>
+		<subFormDefinition name="team"
+			className="fr.paris.lutece.plugins.formengine.modules.aidespjtalents.web.TeamSubForm">
+			<title>Présentation de l'équipe</title>
+			<formElements>
+				<fields>
+					<field type="text" name="nomEquipe">
+						<label>Nom de l'équipe artistique (ou de l'artiste)</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="maxLength" parameter="255" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="dateCreationEquipe">
+						<label>Date de création de l'équipe artistique (JJ/MM/AAAA)
+						</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="dateFormat" parameter="dd/MM/yyyy" />
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="radio" name="typeProjet">
+						<label>Votre projet est un projet</label>
+						<value />
+						<choiceList>
+							<choice label="Individuel" value="171" />
+							<choice label="Collectif" value="172" />
+						</choiceList>
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="siteInternet">
+						<label>Site internet</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="255" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+
+					<!-- RESPONSABLE DU PROJET -->
+
+					<field type="combo" name="civilite">
+						<label>Civilité</label>
+						<value />
+						<choiceList>
+							<choice value="" label="" />
+							<choice label="M." value="174" />
+							<choice label="Mme" value="175" />
+						</choiceList>
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="nom">
+						<label>Nom du responsable du projet</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="prenom">
+						<label>Prénom</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="date">
+						<label>Date de naissance (JJ/MM/AAAA)</label>
+						<value />
+						<additionalInfo>Dans le cas d''un projet individuel, votre date de
+							naissance doit être supérieure ou égale à {0}.</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="dateFormat" parameter="dd/MM/yyyy" />
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="age">
+						<label>Age</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="fieldNumeric" />
+							<checkRule type="maxLength" parameter="3" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field type="textarea" cols="25" rows="3" name="adresse">
+						<label>Adresse</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="2048" />
+						</checkFieldRules>
+					</field>
+					<field type="textarea" cols="25" rows="3" name="complementAdresse">
+						<label>Complément d’adresse</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="2048" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="codePostal">
+						<label>Code postal</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="maxLength" parameter="5" />
+							<checkRule type="minLength" parameter="5" />
+							<checkRule type="fieldNumeric" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="ville">
+						<label>Ville</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="telPortable">
+						<label>Tél. portable</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="phoneNumber" />
+							<checkRule type="maxLength" parameter="255" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="telDomicile">
+						<label>Tél. domicile</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="phoneNumber" />
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="email">
+						<label>Adresse email</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="email" />
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="fonction">
+						<label>Fonction dans l’équipe</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="profession">
+						<label>Profession ou études</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="lieuDeTravail">
+						<label>Lieu de travail ou études</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="codePostalLieuDeTravail">
+						<label>Code postal du lieu de travail ou études</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="5" />
+							<checkRule type="minLength" parameter="5" />
+							<checkRule type="fieldNumeric" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+
+					<field type="radio" name="intermittent">
+						<label>Intermittent du spectacle</label>
+						<value />
+						<choiceList>
+							<choice label="Oui" value="191" />
+							<choice label="Non" value="192" />
+						</choiceList>
+						<checkFieldRules>
+						</checkFieldRules>
+					</field>
+					<field type="text" name="intermittentPrecision">
+						<label>Si oui, précisez dans quel domaine s'exerce votre
+							intermittence</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="radio" name="dejaBeneficieAidePJ">
+						<label>Avez-vous déjà bénéficié d'une Aide Paris Jeunes</label>
+						<value />
+						<choiceList>
+							<choice label="Oui" value="194" />
+							<choice label="Non" value="195" />
+						</choiceList>
+						<checkFieldRules>
+						</checkFieldRules>
+					</field>
+					<field type="text" name="anneeBeneficieAidePJ">
+						<label>Quand ?</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="montantBeneficieAidePJ">
+						<label>Montant</label>
+						<checkRule type="maxLength" parameter="255" />
+						<value />
+						<checkFieldRules>
+							<checkRule type="xss" />
+							<checkRule type="fieldNumeric" />
+						</checkFieldRules>
+					</field>
+					<field type="textarea" cols="25" rows="3"
+						name="quellesDepenses">
+						<label>Quelles dépenses avez-vous ou allez-vous financer grâce à
+							cette aide ?</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+
+					<!-- Checkbox -->
+					<field type="text" name="connuQuestion">
+						<label>Comment avez-vous connu le dispositif Paris Jeunes Talents
+							?</label>
+						<value />
+						<checkFieldRules />
+					</field>
+					<field type="checkbox" name="connuAffichage">
+						<label>Affichage</label>
+						<checkboxValue>198</checkboxValue>
+					</field>
+					<field type="checkbox" name="connuFlyer">
+						<label>Flyer, carte com’</label>
+						<checkboxValue>199</checkboxValue>
+					</field>
+					<field type="checkbox" name="connuEcole">
+						<label>Ecole, université…</label>
+						<checkboxValue>200</checkboxValue>
+					</field>
+					<field type="checkbox" name="connuBoucheAOreille">
+						<label>Bouche à oreille</label>
+						<checkboxValue>201</checkboxValue>
+					</field>
+					<field type="checkbox" name="connuPresse">
+						<label>Presse</label>
+						<checkboxValue>202</checkboxValue>
+					</field>
+					<field type="checkbox" name="connuPrecedenteParticipation">
+						<label>Précédente participation</label>
+						<checkboxValue>203</checkboxValue>
+					</field>
+					<field type="checkbox" name="connuAntenneJeunes">
+						<label>Antenne Jeunes</label>
+						<checkboxValue>204</checkboxValue>
+					</field>
+					<field type="checkbox" name="connuKiosqueJeunes">
+						<label>Kiosque Jeunes</label>
+						<checkboxValue>205</checkboxValue>
+					</field>
+					<field type="checkbox" name="connuCentreAnimation">
+						<label>Centre d’animation</label>
+						<checkboxValue>206</checkboxValue>
+					</field>
+					<field type="checkbox" name="connuInternet">
+						<label>Internet (précisez le site)</label>
+						<checkboxValue>207</checkboxValue>
+					</field>
+					<field type="text" name="connuInternetPrecision">
+						<label>Internet (précisez le site)</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field type="checkbox" name="connuAutre">
+						<label>Autre (précisez)</label>
+						<checkboxValue>208</checkboxValue>
+					</field>
+					<field type="text" name="connuAutrePrecision">
+						<label>Autre (précisez)</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<!-- MEMBRES DE L'EQUIPE -->
+					<field type="text" name="nbrParticipants">
+						<label>* Nombre total de participant(e)s au projet</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="255" />
+							<checkRule type="fieldNumeric" min="2" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="dont1317">
+						<label>dont 13-17 ans</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="255" />
+							<checkRule type="fieldNumeric" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="dont1830">
+						<label>dont 18-30 ans</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="255" />
+							<checkRule type="fieldNumeric" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field type="text" name="dont31Plus">
+						<label>dont 31 ans et plus</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="255" />
+							<checkRule type="fieldNumeric" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="listMembresEquipe">
+						<label>* Liste des membres de l'équipe (modèle à télécharger
+							ci-dessus)</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 1. Seuls
+							les modèles en téléchargement correctement renseignés seront pris
+							en compte. </additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="1" />
+							<checkRule type="fileTypes" parameter="pdf zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+				</fields>
+				<checkSubFormRules>
+					<checkRule type="specific"
+						parameter="fr.paris.lutece.plugins.formengine.modules.aidespjtalents.service.validator.ValidatorTeam" />
+				</checkSubFormRules>
+				<buttons>
+					<button name="Etape precedente" type="submit" />
+					<button name="Enregistrement" type="submit" />
+					<button name="Etape suivante" type="submit" />
+				</buttons>
+			</formElements>
+		</subFormDefinition>
+		<subFormDefinition name="projectSpectacle"
+			className="fr.paris.lutece.plugins.formengine.modules.aidespjtalents.web.ProjectSpectacleSubForm">
+			<title>Présentation du projet</title>
+			<formElements>
+				<fields>
+					<field type="text" name="titreProjet">
+						<label>Titre du projet</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="2048" />
+						</checkFieldRules>
+					</field>
+					<field name="artsRue" type="checkbox">
+						<label>Arts de la rue</label>
+						<checkboxValue>324</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="humour" type="checkbox">
+						<label>Humour</label>
+						<checkboxValue>325</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="cafeTheatre" type="checkbox">
+						<label>Café-théatre</label>
+						<checkboxValue>326</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="marionnette" type="checkbox">
+						<label>Marionnette</label>
+						<checkboxValue>327</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="cirque" type="checkbox">
+						<label>Cirque</label>
+						<checkboxValue>328</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="mime" type="checkbox">
+						<label>Mime</label>
+						<checkboxValue>329</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="danse" type="checkbox">
+						<label>Danse</label>
+						<checkboxValue>330</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="theatre" type="checkbox">
+						<label>Théâtre</label>
+						<checkboxValue>331</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="autreGenre" type="checkbox">
+						<label>Autre (Précisez)</label>
+						<checkboxValue>332</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="autreGenrePrecision" rows="3" cols="40" type="textarea">
+						<label>Au besoin précisez</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field name="presentationProjet" rows="3" cols="40" type="textarea">
+						<label>Présentation du projet (Décrivez ici votre projet. Que voulez vous en faire ?)</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field name="enfants" type="checkbox">
+						<label>Enfants</label>
+						<checkboxValue>336</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="jeunes" type="checkbox">
+						<label>Jeunes</label>
+						<checkboxValue>337</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="adultes" type="checkbox">
+						<label>Adultes</label>
+						<checkboxValue>338</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="toutPublic" type="checkbox">
+						<label>Tout public</label>
+						<checkboxValue>339</checkboxValue>
+						<choiceList />
+					</field>
+					<field name="autrePublic" type="checkbox">
+						<label>Autre (précisez)</label>
+						<checkboxValue>340</checkboxValue>
+						<choiceList />
+					</field>
+					<field type="text" name="autrePublicPrecision">
+						<label />
+						<value />
+						<checkFieldRules>
+							<checkRule type="xss" />
+							<checkRule type="maxLength" parameter="255" />
+						</checkFieldRules>
+					</field>
+					<field name="utilisationAide" rows="3" cols="40" type="textarea">
+						<label>Comment envisagez vous d'utiliser l'Aide Paris Jeunes Talents ? (répétitions, lieux, décors, costumes, communication, etc)</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field type="radio" name="dejaExperience">
+						<label>Avez-vous déjà une expérience dans le domaine du spectacle vivant (cours, spectacles, stages, formation spécifique...)</label>
+						<value />
+						<choiceList>
+							<choice label="Oui" value="341" />
+							<choice label="Non" value="342" />
+						</choiceList>
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+						</checkFieldRules>
+					</field>
+					<field name="experiencePrecision" rows="5" cols="40" type="textarea">
+						<label>Si oui, précisez</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field name="detailRepetition1" rows="5" cols="40" type="textarea">
+						<label>1ère phase de répétition</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field name="detailRepetition2" rows="5" cols="40" type="textarea">
+						<label>2ème phase de répétition</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field name="detailRepetition3" rows="5" cols="40" type="textarea">
+						<label>3ème phase de répétition</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field name="detailRepresentation1" rows="5" cols="40" type="textarea">
+						<label>1ère représentation</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field name="detailRepresentation2" rows="5" cols="40" type="textarea">
+						<label>2ème représentation</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+					<field name="detailRepresentation3" rows="5" cols="40" type="textarea">
+						<label>3ème représentation</label>
+						<value />
+						<checkFieldRules>
+							<checkRule type="maxLength" parameter="2048" />
+							<checkRule type="xss" />
+						</checkFieldRules>
+					</field>
+				</fields>
+				<checkSubFormRules>
+					<checkRule type="specific"
+						parameter="fr.paris.lutece.plugins.formengine.modules.aidespjtalents.service.validator.ValidatorProjectSpectacle" />
+				</checkSubFormRules>
+				<buttons>
+					<button name="Etape precedente" type="submit" />
+					<button name="Enregistrement" type="submit" />
+					<button name="Etape suivante" type="submit" />
+				</buttons>
+			</formElements>
+		</subFormDefinition>
+		<subFormDefinition name="pjSpectacle"
+			className="fr.paris.lutece.plugins.formengine.modules.aidespjtalents.web.AttachmentsSpectacleSubForm">
+			<title>Pièces à joindre</title>
+			<formElements>
+				<fields>
+					<field type="upload" name="justificatifsAge">
+						<label>* Justificatifs de l’âge de chacun des membres de l’équipe (pièce d’identité, carte d’étudiant,…)</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 3.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="minFiles" parameter="1" />
+							<checkRule type="maxFiles" parameter="3" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="justificatifsDomicile">
+						<label>* Justificatifs de domicile ou de lieu de travail, ou d’étude ou de formation</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 3.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="minFiles" parameter="1" />
+							<checkRule type="maxFiles" parameter="3" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="rib">
+						<label>* Relevé d'identité bancaire</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 1.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="minFiles" parameter="1" />
+							<checkRule type="maxFiles" parameter="1" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="noteIntention">
+						<label>* Note d'intention (3 pages maximum)</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 1.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="minFiles" parameter="1" />
+							<checkRule type="maxFiles" parameter="1" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="budgetPrevisionnel">
+						<label>* Budget prévisionnel (modèle à télécharger ci-dessus)
+						</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 1. Seuls
+							les modèles en téléchargement correctement renseignés seront pris
+							en compte. </additionalInfo>
+						<checkFieldRules>
+							<checkRule type="minFiles" parameter="1" />
+							<checkRule type="maxFiles" parameter="1" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="radio" name="creationContemporaine">
+						<label>Votre texte est-il une création ?</label>
+						<value />
+						<choiceList>
+							<choice label="Oui" value="505" />
+							<choice label="Non" value="504" />
+						</choiceList>
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="texteSpectacle">
+						<label>* Texte du spectacle (4 pages maximum) </label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 1.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="1" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="autorisationParentale">
+						<label>Autorisation parentale (candidats mineurs) (modèle à
+							télécharger ci-dessus)</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 3. Seuls
+							les modèles en téléchargement correctement renseignés seront pris
+							en compte. </additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="3" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="cvBio">
+						<label>CV, bio</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 3.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="3" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="dossierPresse">
+						<label>Dossier artistique</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 1.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="1" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="affiche">
+						<label>Affiche, flyer, ...</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 5.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="5" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="texte">
+						<label>Texte</label>
+						<value />
+						<additionalInfo> Nombre maximum de fichiers à fournir : 5.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="5" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="presse">
+						<label>Presse</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 5.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="5" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="photo">
+						<label>Photo</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 5.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="5" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="autrePJ">
+						<label>Autres</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 5.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="5" />
+							<checkRule type="fileTypes" parameter="pdf jpg jpeg jpe zip" />
+							<checkRule type="maxLength" parameter="5242880" />
+						</checkFieldRules>
+					</field>
+					<field type="upload" name="videoPresentation">
+						<label>Vidéo de présentation de votre projet</label>
+						<value />
+						<additionalInfo>Nombre maximum de fichiers à fournir : 2.
+						</additionalInfo>
+						<checkFieldRules>
+							<checkRule type="maxFiles" parameter="2" />
+							<checkRule type="fileTypes"
+								parameter="mpeg mpg avi asf wmv wma mp4 mov 3gp mkv flv ogm zip" />
+							<checkRule type="maxLength" parameter="52428800" />
+						</checkFieldRules>
+					</field>
+				</fields>
+				<checkSubFormRules>
+					<checkRule type="specific"
+						parameter="fr.paris.lutece.plugins.formengine.modules.aidespjtalents.service.validator.ValidatorAttachmentsSpectacle" />
+				</checkSubFormRules>
+				<buttons>
+					<button name="Etape precedente" type="submit" />
+					<button name="Enregistrement" type="submit" />
+					<button name="Etape suivante" type="submit" />
+				</buttons>
+			</formElements>
+		</subFormDefinition>
+		<subFormDefinition name="validationSpectacle"
+			className="fr.paris.lutece.plugins.formengine.modules.aidespjtalents.web.ValidationSpectacleSubForm">
+			<title>Récapitulatif</title>
+			<formElements>
+				<fields>
+					<field type="checkbox" name="acceptationReglement">
+						<label>J'ai pris connaissance du règlement et l'accepte</label>
+						<checkboxValue>1</checkboxValue>
+						<checkFieldRules>
+							<checkRule type="fieldRequired" parameter="true" />
+						</checkFieldRules>
+					</field>
+				</fields>
+				<buttons>
+					<button name="Etape precedente" type="submit" />
+					<button name="Valider votre candidature" type="submit" />
+				</buttons>
+			</formElements>
+		</subFormDefinition>
+	</subForms>
+	<outputs>
+		<outputSet useTransactionHeaders="false">
+			<output outputProcessorClassName="fr.paris.lutece.plugins.formengine.modules.aidespjtalents.service.output.AidesPjTalentsFileOutputProcessor" />
+		</outputSet>
+		<outputSet useTransactionHeaders="true">
+			<output outputProcessorClassName="fr.paris.lutece.plugins.formengine.modules.outputws.WebServiceOutputProcessor" />
+		</outputSet>
+	</outputs>
+</formDefinition>

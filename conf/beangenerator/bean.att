@@ -1,0 +1,2 @@
+#nameOfBean,trueForDTO[;typeOfAttribut,nameOfAttribut,trueForFilter[...]]
+user,true;string,guid,true;date,date,true;string,commentaire,true;string,state,true

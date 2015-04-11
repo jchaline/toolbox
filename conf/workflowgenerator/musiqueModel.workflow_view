@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:view="org.eclipse.jwt/view">
+  <describesModel href="musiqueModel.workflow#/"/>
+  <layoutData viewid="Technical" x="318" y="14" initialized="true">
+    <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.0"/>
+  </layoutData>
+  <layoutData viewid="Technical" x="318" y="462" initialized="true">
+    <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.1"/>
+  </layoutData>
+  <layoutData viewid="Technical" width="80" height="43" x="672" y="144" initialized="true">
+    <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.2"/>
+  </layoutData>
+  <layoutData viewid="Technical" x="327" y="163" initialized="true">
+    <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.3"/>
+  </layoutData>
+  <layoutData viewid="Technical" x="14" y="151" initialized="true">
+    <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.4"/>
+  </layoutData>
+  <layoutData viewid="Technical" x="249" y="294" initialized="true">
+    <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.5"/>
+  </layoutData>
+  <layoutData viewid="Technical" x="517" y="293" initialized="true">
+    <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.6"/>
+  </layoutData>
+  <layoutData viewid="Technical" x="279" y="56" initialized="true">
+    <describesElement href="musiqueModel.workflow#//@elements.0/@nodes.7"/>
+  </layoutData>
+</view:Diagram>

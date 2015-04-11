@@ -1,0 +1,5 @@
+date=java.util.Date
+list=java.util.List
+linkedlist=java.util.List
+arraylist=java.util.List
+hashmap=java.util.Map

@@ -1,0 +1,5 @@
+#nameOfBean,trueForDTO[;typeOfAttribut,nameOfAttribut,trueForFilter[...]]
+video,true;integer,id,true;string,name,true;date,date,true
+acteur,true;integer,id,true;string,firstName,true;string,lastName,true
+serie,true;integer,id,true;string,name,true;
+saison,true;integer,id,true;integer,number,true;

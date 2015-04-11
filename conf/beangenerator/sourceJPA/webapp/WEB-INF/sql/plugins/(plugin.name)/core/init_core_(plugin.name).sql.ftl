@@ -1,0 +1,3 @@
+<#list plugin.beanList as bean>
+INSERT INTO core_admin_right (id_right,name,level_right,admin_url,description,is_updatable,plugin_name,id_feature_group,icon_url,documentation_url,id_order) VALUES ('${plugin.name?upper_case}_${bean.name?upper_case}_MANAGEMENT','${plugin.name}.adminFeature.${plugin.name}.${bean.name}Management.name',3,'jsp/admin/plugins/${plugin.name}/${bean.name}/Manage${bean.name?cap_first}.jsp','${plugin.name}.adminFeature.${plugin.name}.${bean.name}Management.description',0,'${plugin.name}','${bean.name?upper_case}','images/admin/skin/plugins/${plugin.name}/adminPage/adminPage.png',NULL,NULL);
+</#list>

@@ -1,0 +1,1 @@
+﻿<#list plugin.beanList as bean>INSERT INTO ${plugin.name}_sequences VALUES ('${plugin.name}_${bean.name}_id',1);</#list>
