@@ -38,22 +38,20 @@ public class ToolLauncher
         {
             toolId = args[0];
         }
+        String toolIdRequired = toolId;
 
         List<Tool> tools = SpringService.getBean( Tool.class );
         logger.debug( "Tools number : " + tools.size( ) );
+        tools.stream().map(t -> t.getId()).forEach(e -> logger.info("Tool available : "+e));
 
-        Iterator<Tool> toolsItr = tools.iterator( );
-        while ( toolsItr.hasNext( ) )
-        {
-            Tool tool = toolsItr.next( );
-            if ( tool.getId( ).equals( toolId ) )
-            {
-                logger.info( "Tool running ! " );
-                logger.info( "Use conf : " );
-                logger.info( tool.getConf( ) );
-                int status = tool.run( );
-                logger.info( "Tool exit with status " + status );
-            }
-        }
+        logger.debug( "Search for  "+toolIdRequired );
+        tools.stream().filter(t -> t.getId().equals(toolIdRequired)).forEach(tool -> toRun(tool) );
+    }
+
+    static void toRun(Tool tool){
+        logger.info( "Use conf : " );
+        logger.info( tool.getConf( ) );
+        int status = tool.run( );
+        logger.info( "Tool exit with status " + status );
     }
 }
