@@ -45,10 +45,14 @@ public class ToolLauncher
         tools.stream().map(t -> t.getId()).forEach(e -> logger.info("Tool available : "+e));
 
         logger.debug( "Search for  "+toolIdRequired );
-        tools.stream().filter(t -> t.getId().equals(toolIdRequired)).forEach(tool -> toRun(tool) );
+        tools.stream().filter(t -> t.getId().equals(toolIdRequired)).forEach(tool -> lambdaRun(tool) );
     }
 
-    static void toRun(Tool tool){
+    /**
+     * Function devant être remplacé par une lambda
+     * @param tool outil à executer
+     */
+    static void lambdaRun(Tool tool){
         logger.info( "Use conf : " );
         logger.info( tool.getConf( ) );
         int status = tool.run( );
