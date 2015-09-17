@@ -30,7 +30,7 @@ public class ProgressTool implements Tool {
     private static final String SRC_DIR = "D:\\cnaf\\SIM_juin2015";
     private static final String JSON_FILE = "progress.json";
     private static final String FILE_PATTERN = ".*.i$|.*.w$|.*.p$";
-    private static final Pattern INCLUDE_PATTERN = Pattern.compile("\\{([\\w.]*[ipw])\\}");
+    private static final Pattern INCLUDE_PATTERN = Pattern.compile("\\{([\\w.]*\\.[ipw])\\}|RUN ([\\w.]*\\.[ipw])");
 
 	@Override
 	public String getConf() {
@@ -65,7 +65,11 @@ public class ProgressTool implements Tool {
 			lines.stream().filter(l -> INCLUDE_PATTERN.matcher(l).find()).forEach(l ->  {
 				Matcher matcher = INCLUDE_PATTERN.matcher(l);
 				while (matcher.find()) {
-					result.add(matcher.group(1));
+					String group = matcher.group(1);
+					if(group == null){
+						matcher.group(1);
+					}
+					result.add(group);
 				}
 			});
 		} catch (IOException e) {

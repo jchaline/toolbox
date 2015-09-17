@@ -1,0 +1,185 @@
+<!doctype html>
+<html ng-app="TerritoryModule">
+<head>
+    <title>Territories</title>
+	<meta charset="utf-8" />
+
+    <link href="vis/vis.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="vis/vis.min.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+
+    <style type="text/css">
+        #mynetwork {
+            width: 900px;
+            height: 500px;
+            border: 1px solid lightgray;
+        }
+
+        p {
+            max-width:900px;
+        }
+
+        h4 {
+            margin-bottom:3px;
+        }
+    </style>
+</head>
+
+<body ng-controller="territoryController">
+
+	<h4>Territories (use <a target="_blank" href="http://visjs.org">http://visjs.org</a> ):</h4>
+
+	<div id="mynetwork"></div>
+	
+	<button ng-click="updateTerritories();updateRoads()">refresh</button>
+
+	<script type="text/javascript">
+		var nodesArray, nodes, edgesArray, edges, network
+
+		function stopNetwork() {
+			if (network !== null) {
+				network.destroy()
+				network = null
+			}
+		}
+		
+		function addNode(nodeId, label) {
+			nodes.add({id:nodeId, label:label})
+		}
+		
+		function addEdge(fromId, toId) {
+			edges.add({from: fromId, to: toId})
+		}
+		
+		//replace by ws call to road & territory controllers
+		function initNetwork() {
+			// create an array with nodes
+			nodesArray = []
+			nodes = new vis.DataSet(nodesArray)
+
+			// create an array with edges
+			edgesArray = []
+			edges = new vis.DataSet(edgesArray)
+
+			// create a network
+			var container = document.getElementById('mynetwork')
+			var data = {
+				nodes: nodes,
+				edges: edges
+			}
+			var options = {}
+			network = new vis.Network(container, data, options)
+		}
+
+		initNetwork()
+		
+		var app = angular.module( "TerritoryModule", [] )
+		
+		app.controller(
+			"territoryController",
+			function( $scope, territoryService ) {
+				$scope.territories = []
+				
+				$scope.updateTerritories = function() {
+					territoryService.updateTerritories().then(thenDoTerritories)
+				}
+				
+				$scope.initNodes = function() {
+					var nodesJson = {"sb14refisrv.p":["sbsprsrv.i","migrtrac.i",null,null,null,null,null,null,null,null],"sb14ann1srv.p":["sbsprsrv.i"],"sb062calptges.p":[null],"sb97del.i":[],"sb14cpte.w":["hr99mbdf.i","sbsprclt.i",null,null,null,null],"sb01rtdc.p":[],"sb14pra3.w":["hr99mbdf.i","sbsprclt.i","hr99mbdi.i",null,null,"inislide.i","modslide.i","hr99mben.i",null],"sb97exp0.p":["hr99ptmf.i",null],"sb01rtcr.p":[],"sb97org4.p":[null],"sb14pgco.w":["hr99mbdf.i","sbsprclt.i",null,null,"inislide.i","modslide.i",null],"sb01rtlg.p":[],"sb06mutu.i":[],"sb97gvt1.p":[null],"sb14dele.p":[],"sb97pag6.p":[null],"sb06sal.i":[],"sb99prme.p":[],"sb97agt5.p":[null],"bt99dvar.i":[],"sb26gestsrv.p":["sbsprsrv.i","migrtrac.i"],"simusrv.p":["sbsprsrv.i",null],"sb97org5.p":[null],"sb15rectsrv.p":["sbsprsrv.i","migrtrac.i",null],"sb14mdacsrv.p":["sbsprsrv.i"],"sb14envl.w":["hr99mbdf.i","sbsprclt.i",null,null,null,null,"iniSlide.i","inislide.i","modslide.i"],"sb06saco.i":[],"hr99mbdi.i":[],"sbaprese.i":[],"sb09simp.p":[],"sb14pgpr.w":["hr99mbdf.i","hr99mben.i","hr99mben.i","hr99mbdi.i",null,null,"inislide.i","modslide.i",null],"sb14slagsrv.p":["sbsprsrv.i",null],"sb01raze.p":[null],"sb14spfr.w":["hr99mbdf.i","sbsprclt.i",null,null,"inislide.i","modslide.i",null],"sb14pra3srv.p":["sbsprsrv.i",null,null],"sb06inter.i":[],"sb57prim.p":[],"sb06efco.i":[],"sb01exor.p":[],"sb14rect.w":["hr99mbdf.i","hr99ptmf.i","sbsprclt.i",null,null,null],"sb14envlsrv.p":["sbsprsrv.i","migrtrac.i"],"sb14pra2.w":["hr99mbdf.i","sbsprclt.i","hr99mbdi.i",null,null,"inislide.i","modslide.i","hr99mben.i",null],"sb97exp1.p":[null],"sb14pconsrv.p":["sbsprsrv.i","migrtrac.i"],"sb97org3.p":[null],"sb14extr.w":["sbsprclt.i",null],"sb97gvt2.p":[null],"sb06vaff.i":[],"sb15rect.p":[],"sb97agt4.p":[null],"sb09sima.p":[null],"sb06cp.i":[],"sb01rtch.p":[],"shisb6702magic3150.p":[],"sb97sim6.p":[null],"sbaafges.i":[],"sb14tptrsrv.p":["sbsprsrv.i","migrtrac.i",null,null,null],"sbaafser.i":[],"sb26servsrv.p":["sbsprsrv.i","migrtrac.i"],"sb14extrsrv.p":["sbsprsrv.i","migrtrac.i",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],"sb14topabsence.p":[],"sb97pra0.p":["hr99ptmf.i",null],"sb02edmg.w":["bt99dvar.i"],"sb97pag7.p":[null],"sb14simu.w":["sbsprclt.i",null],"sb14exel.p":["bt99dvar.i","sbsprclt.i"],"sb14ann1.w":["hr99mbdf.i","sbsprclt.i",null,null,null,null,null,"iniSlide.i","inislide.i"],"sb06plaf.i":[],"sb01idag.p":["ps_mu_majsitpe.i",null],"sb06lfrss.i":[],"sb26serv.w":["sbsprclt.i"],"sb01coti.p":[],"sb97str1.p":[null],"sb06coen.i":[],"sb06prorata.i":[],"sb06elemcal.i":[],"sb97exp2.p":[null],"exclusivenowait.i":[],"sb14attrsrv.p":["sbsprsrv.i",null,null,null],"sb09sima.i":[],"sb06txsa.i":[],"sbsprsrvdbgrh.p":[],"sblistagtsrv.p":["sbsprsrv.i","migrtrac.i"],"sb97pag4.p":[null],"sb14reinsrv.p":["sbsprsrv.i","migrtrac.i"],"sb061cal.p":["sb06dfsv.i","sb06elemcal.i","sb06caldiv.i","sb06prorata.i","sb06coefgapv.i","sb06sal.i","sb06cp.i","sb06primdiv.i","sb06indemndiv.i","sb06indemnlic.i","sb06res641.i","sb06raz.i",null,null,null,null,null,null,"sb06ptho.i","sb06prre.i","sb06prpo.i","sb06prpt.i","sb06prpa.i","sb06prfr.i","sb06sasp.i","sb06sasr.i","sb06sahc.i","sb06indi.i","sb06agdi.i","sb06prtr.i","sb06saco.i","sb06plaf.i","sb06coss.i","sb06inter.i","sb06mutu.i","sb06cppo.i","sb06coen.i","sb06fnal.i","sb06ttrc.i","sb06asse.i","sb06txsa.i","sb06efco.i","sb06form.i","sb06rest.i","sb06mdctr.i"],"sb97agt3.p":[null],"sb14intesrv.p":["sbsprsrv.i","migrtrac.i"],"sb06coss.i":["sb06lfrss.i"],"sb14rept.w":["hr99mbdf.i","sbsprclt.i",null,null,null,"inislide.i","modslide.i","hr99mben.i",null],"sb14corr.w":["hr99mbdf.i","sbsprclt.i",null,null,null,"inislide.i","modslide.i","hr99mben.i",null],"ps_sim_s_l_bu_renommeflxtmp.p":[],"ps_sim_s_l_pp_salreficp.p":[],"sb97int1.p":[null],"sb14exelsrv.p":["sbsprsrv.i","migrtrac.i",null,null,null,null,null,null,null],"sb97sim5.p":[null],"sb14sepajucor.p":[],"sb59stpr.p":[],"sb14calvaca.p":[],"migrtrac.i":[],"sb14magi.p":["bt99dvar.i","sbsprclt.i"],"modslide.i":[],"sb14attr.w":["hr99mbdf.i","sbsprclt.i","hr99mbdi.i",null,null,"inislide.i","modslide.i","hr99mben.i",null],"sb14adac.w":["hr99mbdf.i","hr99ptmf.i","sbsprclt.i",null,null],"sb01nagt.p":[null,null,null,null,null],"sb15duagsrv.p":["sbsprsrv.i","migrtrac.i",null,null],"sb01rtyc.i":[],"sb06form.i":[],"sb57stpr.p":[],"sb97str0.p":[null],"sb14tptr.w":["hr99mbdf.i","sbsprclt.i",null,null,"inislide.i","modslide.i",null],"sb14pgtasrv.p":["sbsprsrv.i","migrtrac.i"],"sb00bare.p":[],"sb01afse.p":[],"sbasipro.i":[],"sb97gvt0.p":["hr99ptmf.i",null],"sb14cumajucor.p":[],"sb14spfrsrv.p":["sbsprsrv.i",null,null,null,null,null,null],"sb97pag5.p":[null],"sb97agt2.p":[null],"sb14servic.w":["hr99mbdf.i","sbsprclt.i","hr99mbdi.i",null,null,"hr99mben.i",null],"sb14pra2srv.p":["sbsprsrv.i",null,null],"sb97int0.p":[null],"sb97org6.p":[null],"sb97sim4.p":[null],"sbasitpe.i":[],"sbjouvre.i":[],"sbversio.p":[],"sb14rectsrv.p":["sbsprsrv.i",null,null,null,null],"sb97cogl.w":["hr99mbdf.i",null,null,"inislide.i","modslide.i",null],"sb15duag.w":["sbsprclt.i"],"sbstatus.p":["sbsprclt.i"],"sb14fiag.p":[null],"sb14inte-bis.p":[],"int_exel_pchmtr.p":[],"sb14reco.w":["hr99mbdf.i","sbsprclt.i",null,null,"inislide.i","modslide.i","hr99mben.i",null],"sb06caldiv.i":[],"start.p":[],"sbstatussrv.p":["sbsprsrv.i","migrtrac.i"],"sb14patr.w":["hr99mbdf.i","sbsprclt.i","hr99mbdi.i","hr99mbdi.i",null,null,"inislide.i","modslide.i","hr99mben.i",null],"sb14pgcosrv.p":["sbsprsrv.i","migrtrac.i"],"ps_sim_honemplo.p":[],"sb97org0.p":["hr99ptmf.i",null],"ps_paie_s_l_pp_cumulgratant.p":[],"sb14servicsrv.p":["sbsprsrv.i"],"sb97ajc1.p":[null],"sbsprclt.p":["separateurs.i",null,null],"sb14ajussrv.p":["sbsprsrv.i"],"sbatattr.i":[],"ps_mu_majsitpe.i":[],"sb14pcon.w":["bt99dvar.i","hr99mbdf.i","hr99ptmf.i","sbsprclt.i",null,null,null],"sb14ajucorsrv.p":["sbsprsrv.i"],"sbsprclt.i":["separateurs.i"],"sb97agt1.p":[null],"sb14jouv.w":["hr99mbdf.i",null,null,null],"sb97pag2.p":[null],"sb97sim3.p":[null],"sb14gestio.w":["hr99mbdf.i","sbsprclt.i","hr99mbdi.i",null,null,"hr99mben.i",null],"sbapriag.i":[],"sb01rtin.p":[],"simu.p":["gx00dnew.i","sbsprclt.i",null],"sb14init.p":[],"sb97pra3.p":[null],"sb06fnal.i":[],"sb01page.p":[],"sbligneinterv.p":[],"sb14jouvsrv.p":["sbsprsrv.i","migrtrac.i"],"sb06raz.i":[],"sb14mdac.w":["hr99mbdf.i","sbsprclt.i",null,null,"inislide.i","modslide.i","hr99mben.i","hr99mben.i","hr99mbdi.i","hr99mbdi.i"],"sb14adacsrv.p":["sbsprsrv.i",null],"sb14magisrv.p":["sbsprsrv.i",null,null,null,null,null,null,null,null,null,null,null,null,null],"sb97str2.p":[null],"pgminterv.p":[],"sb14cptesrv.p":["sbsprsrv.i","migrtrac.i"],"sb01padi.p":[],"sb01afge.p":[],"sb97coglsrv.p":["sbsprsrv.i",null],"separateurs.i":[],"sb14afgesrv.p":["sbsprsrv.i",null,null,null],"sb14afge.w":["hr99mbdf.i","sbsprclt.i","hr99mbdi.i",null,null,"inislide.i","modslide.i","hr99mben.i",null],"sb97agt0.p":[null],"sb97pag3.p":[null],"shisb6703sim.p":["bt99dvar.i",null,null,null,null,null,null,null,null,null,null],"sb14adac_accesbdgrh.p":[],"sb06indemnlic.i":[],"sb97sim2.p":[null],"sb14inte.w":["hr99ptmf.i","sbsprclt.i",null],"sb14afsesrv.p":["sbsprsrv.i",null,null,null],"hr99mbdf.i":[],"sb97pra4.p":[null],"sb01remant.p":[null,null],"sb14rein.w":["hr99mbdf.i","sbsprclt.i",null,null,"inislide.i","modslide.i","hr99mben.i",null],"sb06dfsv.i":[],"sb14gestiosrv.p":["sbsprsrv.i"],"sb14recosrv.p":["sbsprsrv.i","migrtrac.i",null,null,null,null],"sb14ajucor.w":["sbsprclt.i"],"sb97org2.p":[null],"sbasiprr.i":[],"inislide.i":[],"sb14vacasrv.p":["sbsprsrv.i","migrtrac.i"],"sb06res641.i":[],"sb97gvt3.p":[null],"hr99ttdf.i":[],"sb14pgpl.w":["hr99mbdf.i","hr99mben.i","hr99mben.i","hr99mbdi.i",null,null,"inislide.i","modslide.i",null],"sb14ajus.w":["hr99mbdf.i","sbsprclt.i",null,null,null,"inislide.i","modslide.i","hr99mben.i",null],"sb14reptsrv.p":["sbsprsrv.i","migrtrac.i"],"sb14refi.w":["hr99mbdf.i","bt99dvar.i","sbsprclt.i",null,null,null,null,null,"inislide.i","modslide.i",null],"sb14agen.w":["hr99mbdf.i","sbsprclt.i","hr99mbdi.i",null,null,null,"inislide.i","modslide.i",null,null],"sb97pag0.p":[null],"sb97sim1.p":[null],"sb01stre.p":[],"sb14vaca.w":["hr99mbdf.i","sbsprclt.i",null,null,null,null,"iniSlide.i","inislide.i"],"sb06indemndiv.i":[],"sblistagt.w":["sbsprclt.i"],"sb06coefgapv.i":[],"sb06cppo.i":[],"sb01stpr.p":[],"sb97pra1.p":[null],"sb01tyco.i":[null],"sbatpstr.i":[],"sb01tptr.p":[null,null,null,null,null],"sb06ttrc.i":[],"sb14pgprsrv.p":["sbsprsrv.i"],"sb14patrsrv.p":["sbsprsrv.i"],"sbsprsrv.i":["separateurs.i","hr99ptmf.i","bt99dvar.i"],"sbsprsrv.p":["separateurs.i",null],"sb14slag.w":[null,null,null],"sb14pgta.w":["hr99mbdf.i","sbsprclt.i",null,null,null,"inislide.i"],"sb14magi_accesbdgrh.p":[],"sb14pgplsrv.p":["sbsprsrv.i"],"sb97org1.p":[null],"sb14afse.w":["hr99mbdf.i","sbsprclt.i","hr99mbdi.i",null,null,"inislide.i","modslide.i","hr99mben.i",null],"sb97ajc0.p":[null],"sb01attr.p":[],"sb14corrsrv.p":["sbsprsrv.i"],"sb06asse.i":[],"sb01rtre.p":[],"sb97gvt4.p":[null],"sb26gest.w":["sbsprclt.i"],"sbonglet.p":[],"sb06rest.i":[],"sb97pag1.p":[null],"sb14elmsal.p":[],"sb06primdiv.i":[],"sb97agt6.p":[null],"ps_grh_e_c_ag_marquageagdeltasim.p":[],"hr99ptmf.i":[],"sb97sim0.p":[null],"sb14simusrv.p":["sbsprsrv.i","migrtrac.i",null,null,null,null,null],"hr99mben.i":[],"sb99coef.p":[],"sb14agensrv.p":["sbsprsrv.i",null,null,null,null,null,null],"sb06mdctr.i":[],"sb14ini2.p":[],"sb14initsrv.p":["sbsprsrv.i","migrtrac.i",null,null,null,null],"sb97pra2.p":[null],"sb10extr.p":[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]};
+					
+					nodes.clear()
+					edges.clear()
+					
+					var i = 0;
+					nodesJson.forEach(function(e){
+						addNode(i++, e.name)
+					})
+				}
+				
+				$scope.updateRoads = function() {
+					territoryService.updateRoads().then(thenDoRoads)
+				}
+				
+				// when request is ok, processing server data
+				function thenDoTerritories(data) {
+					nodes.clear()
+					edges.clear()
+					data.forEach(function(e){
+						addNode(e.id, e.name)
+					})
+				}
+				function thenDoRoads(data) {
+					edges.clear()
+					data.forEach(function(e){
+						addEdge(e.from.id, e.to.id)
+					})
+				}
+			}
+		)
+		app.service(
+			"territoryService",
+			function( $http, $q ) {
+				// Return public API.
+				return({
+					updateTerritories: updateTerritories,
+					updateRoads: updateRoads
+				})
+				
+				function updateTerritories( ) {
+					var request = $http({
+						method: "get",
+						url: "http://localhost:8080/territory/list",
+						params: {
+							//action: "add"
+						},
+						data: {
+							//name: ""
+						}
+					})
+					return( request.then( handleSuccess, handleError ) )
+				}
+				
+				function updateRoads( ) {
+					var request = $http({
+						method: "get",
+						url: "http://localhost:8080/road/list",
+						params: {
+							//action: "add"
+						},
+						data: {
+							//name: ""
+						}
+					})
+					return( request.then( handleSuccess, handleError ) )
+				}
+				
+				// ---
+				// PRIVATE METHODS.
+				// ---
+				// I transform the error response, unwrapping the application dta from
+				// the API response payload.
+				function handleError( response ) {
+					// The API response from the server should be returned in a
+					// nomralized format. However, if the request was not handled by the
+					// server (or what not handles properly - ex. server error), then we
+					// may have to normalize it on our end, as best we can.
+					if (
+						! angular.isObject( response.data ) ||
+						! response.data.message
+					) {
+						return( $q.reject( "An unknown error occurred." ) )
+					}
+						// Otherwise, use expected error message.
+						return( $q.reject( response.data.message ) )
+				}
+				
+				// I transform the successful response, unwrapping the application data
+				// from the API response payload.
+				function handleSuccess( response ) {
+					return( response.data )
+				}
+			}
+		)
+	</script>
+</body>
+</html>
