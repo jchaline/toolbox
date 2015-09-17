@@ -1,7 +1,10 @@
 package tools.generator.service;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import services.FileService;
 import services.PropertiesService;
@@ -13,6 +16,7 @@ import tools.generator.utils.GeneratorConstants;
 
 public class BeanService
 {
+	private static final Logger logger = Logger.getLogger( BeanService.class );
     public static final String PATH_PROJECT = System.getProperty( "user.dir" );
     public final static String FOLDER_CONFIG_NAME = "\\conf";
     public final static String FOLDER_OVERRIDE_NAME = "\\override";
@@ -50,14 +54,20 @@ public class BeanService
         List<Bean> beanList = new LinkedList<Bean>( );
 
         String pathBeansFile = PropertiesService.getProperty( GeneratorConstants.KEY_BEANS_FILE_NAME );
-        List<String> linesOfBeanFile = FileService.read( pathBeansFile );
-        linesOfBeanFile = filterLine( linesOfBeanFile );
+        List<String> linesOfBeanFile;
+		try {
+			linesOfBeanFile = FileService.read( pathBeansFile );
+			linesOfBeanFile = filterLine( linesOfBeanFile );
 
-        for ( String line : linesOfBeanFile )
-        {
-            Bean createBeanFromLine = createBeanFromLine( line );
-            beanList.add( createBeanFromLine );
-        }
+	        for ( String line : linesOfBeanFile )
+	        {
+	            Bean createBeanFromLine = createBeanFromLine( line );
+	            beanList.add( createBeanFromLine );
+	        }
+		} catch (IOException e) {
+			logger.error(e);
+		}
+        
         return beanList;
     }
 

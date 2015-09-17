@@ -2,15 +2,15 @@ package services;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
@@ -18,40 +18,24 @@ import org.apache.log4j.Logger;
 import utils.ToolsConstants;
 
 
-public class FileService
-{
+public class FileService{
     private static final Logger logger = Logger.getLogger( FileService.class );
 
-    private FileService( )
-    {
+    private FileService( ) {
     }
 
     /**
      * Read all the line of the file and return the list
      * @param path the path to the file
      * @return the list of the correct line
+     * @throws IOException 
      */
-    public static List<String> read( String path )
-    {
-        List<String> ret = new LinkedList<String>( );
-        Scanner scanner = new Scanner( System.in );
-        try
-        {
-            scanner = new Scanner( new File( path ) );
-        }
-        catch ( FileNotFoundException e )
-        {
-            logger.error( e );
-        }
-        while ( scanner.hasNextLine( ) )
-        {
-            String line = new String( scanner.nextLine( ) );
-            ret.add( line );
-        }
-
-        scanner.close( );
-
-        return ret;
+    public static List<String> read( String path ) throws IOException{
+    	return Files.readAllLines( Paths.get(path));
+    }
+    
+    public static List<String> read( String path, Charset charset ) throws IOException{
+    	return Files.readAllLines( Paths.get(path), charset);
     }
 
     /**
@@ -59,8 +43,7 @@ public class FileService
      * @param filePath the path to the folder
      * @param text the text content
      */
-    public static int write( String filePath, String text )
-    {
+    public static int write( String filePath, String text ) {
     	int error = ToolsConstants.STATUS_OK;
         //on met try si jamais il y a une exception
         BufferedWriter output = null;
@@ -100,42 +83,33 @@ public class FileService
 
     /**
      * Find all the file in the directory given
-     * @param deep the deep for recursively search. Stop at 0, boundless for
-     *            negative parameter (like -1)
+     * @param deep the deep for recursively search. Stop at 0, negative parameter for boundless
      * @param fileList the list of the files
      * @param directoryPath the directory to search recursively
      * @param pattern the pattern the file must match, can be null
-     * @deprecated Replace deep by filter object
      */
-    @Deprecated
     public static List<String> findFiles( int deep, String directoryPath, String pattern )
     {
     	List<String> fileList = new ArrayList<String>();
-        if ( fileList != null )
-        {
+        if ( fileList != null ) {
             File directory = new File( directoryPath );
 
             //si le fichier courant n'existe pas, on arrête cette passe
-            if ( !directory.exists( ) )
-            {
+            if ( !directory.exists( ) ) {
             }
             //si le fichier courant n'est pas un repertoire, on l'ajoute ou non en fonction du respect du pattern
-            else if ( !directory.isDirectory( ) )
-            {
+            else if ( !directory.isDirectory( ) ) {
                 boolean matches = Pattern.compile( pattern ).matcher( directoryPath ).matches( );
-                if ( pattern == null || matches )
-                {
+                if ( pattern == null || matches ) {
                     fileList.add( directoryPath );
                 }
             }
             //sinon, en fonction de la profondeur paramétrée, on descend dans les sous répertoires
-            else if ( deep != 0 )
-            {
+            else if ( deep != 0 ) {
                 File[] subfiles = directory.listFiles( );
-                for ( int i = 0; i < subfiles.length; i++ )
-                {
+                for ( int i = 0; i < subfiles.length; i++ ) {
                     String name = subfiles[i].getName( );
-                    String path = directoryPath + "/" + name;
+                    String path = directoryPath + File.separator + name;
                     fileList.addAll(findFiles( deep - 1, path, pattern ));
                 }
             }

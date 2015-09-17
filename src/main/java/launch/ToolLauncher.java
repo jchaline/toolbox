@@ -1,6 +1,5 @@
 package launch;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,7 +25,11 @@ public class ToolLauncher
     	SpringService.init();
         PropertiesService.init( );
 
-        String toolId = null;
+        List<Tool> tools = SpringService.getBean( Tool.class );
+        logger.debug( "Tools size : " + tools.size( ) );
+        tools.stream().forEach(e -> logger.info("Tool available : "+e.getId()));
+        
+        final String toolId;
         if ( args.length != 1 )
         {
             Scanner sc = new Scanner( System.in );
@@ -38,21 +41,15 @@ public class ToolLauncher
         {
             toolId = args[0];
         }
-        String toolIdRequired = toolId;
-
-        List<Tool> tools = SpringService.getBean( Tool.class );
-        logger.debug( "Tools number : " + tools.size( ) );
-        tools.stream().map(t -> t.getId()).forEach(e -> logger.info("Tool available : "+e));
-
-        logger.debug( "Search for  "+toolIdRequired );
-        tools.stream().filter(t -> t.getId().equals(toolIdRequired)).forEach(tool -> lambdaRun(tool) );
+        
+        logger.debug( "Search for  "+toolId );
+        tools.stream().filter(t -> t.getId().equals(toolId)).findFirst().ifPresent(ToolLauncher::run);;
     }
 
     /**
-     * Function devant être remplacé par une lambda
      * @param tool outil à executer
      */
-    static void lambdaRun(Tool tool){
+    static void run(Tool tool){
         logger.info( "Use conf : " );
         logger.info( tool.getConf( ) );
         int status = tool.run( );

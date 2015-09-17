@@ -84,17 +84,22 @@ public class RepositoryService {
     	
     	List<String> listPaths = FileService.findFiles(-1, repoPath, PATTERN_POM);
     	logger.debug("Find "+listPaths.size()+" poms");
-    	for(String pomPath : listPaths){
-    		List<String> lines = FileService.read(pomPath);
-    		String pomContent = StringUtils.join(lines, "\n");
-    		pomContent = Jsoup.parse(pomContent).body( ).children( ).removeAttr( "xmlns" ).removeAttr( "xmlns:xsi" )
-            .removeAttr( "xsi:schemalocation" ).toString( );
-    		try {
+    	for (String pomPath : listPaths) {
+    		List<String> lines;
+			try {
+				lines = FileService.read(pomPath);
+				String pomContent = StringUtils.join(lines, "\n");
+	    		pomContent = Jsoup.parse(pomContent)
+	    				.body( ).children( )
+	    				.removeAttr( "xmlns" )
+	    				.removeAttr( "xmlns:xsi" )
+	    				.removeAttr( "xsi:schemalocation" )
+	    				.toString( );
     			projects.add(MavenService.getProject(pomContent));
-			} catch (JAXBException e) {
+    			logger.debug(pomContent.length());
+			} catch (IOException | JAXBException e) {
 				logger.error(e);
 			}
-    		logger.debug(pomContent.length());
     	}
     	return projects;
     }
