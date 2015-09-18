@@ -7,17 +7,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import services.FileService;
 import tools.Tool;
+import tools.progress.service.ProgressService;
 
 @Service
 public class ProgressTool implements Tool {
@@ -30,7 +30,9 @@ public class ProgressTool implements Tool {
     private static final String SRC_DIR = "D:\\cnaf\\SIM_juin2015";
     private static final String JSON_FILE = "progress.json";
     private static final String FILE_PATTERN = ".*.i$|.*.w$|.*.p$";
-    private static final Pattern INCLUDE_PATTERN = Pattern.compile("\\{([\\w.]*\\.[ipw])\\}|RUN ([\\w.]*\\.[ipw])");
+    
+    @Autowired
+    private ProgressService service;
 
 	@Override
 	public String getConf() {
@@ -62,15 +64,8 @@ public class ProgressTool implements Tool {
 		List<String> result = new ArrayList<String>();
 		try {
 			List<String> lines = FileService.read(path, Charset.forName(CHARSET_PROGRESS));
-			lines.stream().filter(l -> INCLUDE_PATTERN.matcher(l).find()).forEach(l ->  {
-				Matcher matcher = INCLUDE_PATTERN.matcher(l);
-				while (matcher.find()) {
-					String group = matcher.group(1);
-					if(group == null){
-						matcher.group(1);
-					}
-					result.add(group);
-				}
+			lines.stream().filter(service::keepLine).forEach(l ->  {
+				result.addAll(service.findDependencies(l));
 			});
 		} catch (IOException e) {
 			logger.error("Impossible to load file " + path + " : " + e);

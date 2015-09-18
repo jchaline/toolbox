@@ -1,0 +1,13 @@
+#progressGraph {
+    width: auto;
+    height: 500px;
+    border: 1px solid lightgray;
+}
+
+p {
+    max-width:900px;
+}
+
+h4 {
+    margin-bottom:3px;
+}

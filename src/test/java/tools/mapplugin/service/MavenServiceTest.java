@@ -26,8 +26,7 @@ public class MavenServiceTest
     private Repository repo;
 
     @Before
-    public void init( )
-    {
+    public void init( ) {
         PropertiesService.init( );
         serializableFile = PropertiesService.getProperty( MappluginConstants.MARK_SERIALIZABLE_FILE );
         repo = SerializableService.deserialize( serializableFile );
@@ -35,8 +34,7 @@ public class MavenServiceTest
 
     @Test
     @Ignore( "Not yet implemented : suffix different of SNAPSHOT" )
-    public void compareAlphaTest( )
-    {
+    public void compareAlphaTest( ) {
         assertTrue( ArtifactComparator.compareStatic( "2.0.0", "2.0.2" ) == -1 );
         assertTrue( ArtifactComparator.compareStatic( "2.0.1", "2.0.2" ) == -1 );
         assertTrue( ArtifactComparator.compareStatic( "3.0.1", "2.0.2" ) == 1 );
@@ -48,8 +46,7 @@ public class MavenServiceTest
 
     @Test
     @Ignore
-    public void compareTest( )
-    {
+    public void compareTest( ) {
         assertTrue( ArtifactComparator.compareStatic( "2.0.0", "2.0.2" ) < 0 );
         assertTrue( ArtifactComparator.compareStatic( "2.0.1", "2.0.2" ) < 0 );
         assertTrue( ArtifactComparator.compareStatic( "3.0.1", "2.0.2" ) > 0 );
@@ -58,24 +55,19 @@ public class MavenServiceTest
 
     @Test
     @Ignore
-    public void associateDependenciesTest( )
-    {
+    public void associateDependenciesTest( ) {
         Project project = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
                 "[2.0.2-SNAPSHOT,2.1.3]" );
 
         project.setRealDependencies( new ArrayList<String>( ) );
-
         assertTrue( project.getRealDependencies( ).isEmpty( ) );
-
+        
         MavenService.associateDependencies( repo );
-
         assertTrue( !project.getRealDependencies( ).isEmpty( ) );
 
         //asser that all dependency contains three part separate with ;
-        for ( Project p : repo.getProjectsList( ) )
-        {
-            for ( String s : p.getRealDependencies( ) )
-            {
+        for ( Project p : repo.getProjectsList( ) ) {
+            for ( String s : p.getRealDependencies( ) ) {
                 assertTrue( s.split( MappluginConstants.ARTIFACT_COORD_SEPARATOR ).length == 3 );
             }
         }
@@ -83,8 +75,7 @@ public class MavenServiceTest
 
     @Test
     @Ignore
-    public void resolveVersionTest( )
-    {
+    public void resolveVersionTest( ) {
         Project dependencySimple = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
                 "2.1.2-SNAPSHOT" );
         Project dependencyPlage = MavenService.findDependency( repo, "fr.paris.lutece.plugins", "plugin-html",
