@@ -1,5 +1,9 @@
 var app = angular.module( "graphModule", [] )
-	
+
+//graph example
+var graph = {name:"progress graph", from: function(node){return "test"}, nodes:[{name:"sb14refisrv.p"}, {name:"sb14exelsrv.p"}], edges:[{from:"sb14refisrv.p", to:"sb14exelsrv.p"}], bidirect: false}
+console.log(graph)
+
 app.controller(
 	"graphController",
 	function( $scope, graphService ) {
@@ -43,7 +47,7 @@ app.service(
 			}
 			var options = {}
 			var network = new vis.Network(container, data, options)
-			network.on("selectNode", function (params) {
+			network.on("doubleClick", function (params) {
 				var filter = nodes._data[params.nodes[0]].label
 				showGraph(filter)
 		    });
@@ -56,7 +60,7 @@ app.service(
 			
 			var i = 0;
 			var keys = Object.keys(nodesJson).filter(function(e){
-				return nodeSelect == "" || nodeSelect == e || (nodesJson[e].indexOf(nodeSelect) > 1)
+				return nodeSelect == "" || nodeSelect == e || (nodesJson[e].indexOf(nodeSelect) >= 0)
 			})
 			keys.forEach(function(from){
 				if (!( from in nodesIdx)) {

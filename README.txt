@@ -1,24 +1,12 @@
 
-***************************************
-*************** TOOLBOX ***************
-***************************************
- - chaque tool doit être utilisable en tant que thread pour ne pas être bloquant
- - configuration et gestion des logs avec log4j
-
-
-UTILISATION DU GENERATOR DE BEAN
- -> ce programme permet de generer des bean
+UTILISATION DU GENERATOR DE BEAN (lutece)
+ -> ce programme permet de generer des bean et les fichiers liés
  
-1) Configurer les differentes variables dans le fichier config.properties
+1) Configurer les différentes variables dans le fichier config.properties
 2) Configurer les attributs du bean voulu dans le fichier bean.att
 3) REGLE : si le nom du template contient (bean.name), un fichier par bean est généré, sinon, un seul pour le plugin
-4) 2 cas de bean ceux avec un id généré automatiquement (id de type entier, utilisation d'une sequence pour hibernate) et ceux avec un string
-
-Génération : clic droit sur GenApp.java, Run as java application	 
-
-UTILISATION DU MARKER DE TEMPLATE
- -> ce programme ajoute le nom d'un template à la fin de son code source afin de le retrouver dans l'environnement
-1) configurer le chemin du repertoire racine des templates (variable pathTemplate dans Application.java)
+4) 2 cas de bean : ceux avec un id généré automatiquement (id de type entier, utilisation d'une sequence pour hibernate) et ceux avec un string
+5) Génération : clic droit sur GenApp.java, Run as java application	 
 
 TODO :
 corriger les templates pour prendre en compte le checkstyle de la mairie de paris
@@ -36,8 +24,6 @@ creation d'une regle pour définir les fichiers cibles =>
 	=> lel.xml 
 Externaliser la method de filtre
 poser sur papier le processus et trouver des nom de methodes / variables plus parlant
-generation harnai de test ? plugin maven pour la compilation ? cf plugin ods
-a quoi sert et comment est utilisé le contenu de la balise <class> dans le plugin.xml ?
 
  X prendre en compte ce qui a été fait pour ODS pour les attributs dynamiques
  X rechir si le system d'annotation ne pourrait pas servir pour la génération plutôt que du naming ?
@@ -54,10 +40,17 @@ a quoi sert et comment est utilisé le contenu de la balise <class> dans le plug
  X corriger generation jsp avec module stock billetterie
  X 2 modes => 1) génération des fichiers (java, jsp, html, xml) par defaut s'ils n'existent pas (en fonction d'un fichier de config), 2) génération des fichiers manquants et reprise du contenu des fichiers existants (adaptation selon les parametres existants ?)
  X mappingplugin => remplacer les maven properties pour les versions 
- 
+
+********************************************************
+
+UTILISATION DU MARKER DE TEMPLATE
+ -> ce programme ajoute le nom d'un template à la fin de son code source afin de le retrouver dans l'environnement
+1) configurer le chemin du repertoire racine des templates (variable pathTemplate dans Application.java)
+
+TODO :
 refactorer le marker pour utiliser le fichier de conf
 permettre de marquer les jsp au niveau du contenu injecté par les jsp bean 
- X creer une methode pour reprendre les anciens fichiers (remplace *~ => *)
+ X créer une méthode pour reprendre les anciens fichiers (remplace *~ => *)
  
  
  
